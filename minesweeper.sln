@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minesweeper", "minesweeper\minesweeper.csproj", "{058021B9-C3B0-4282-9E58-A02DA4B8C396}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinesweeperTest", "MinesweeperTest\MinesweeperTest.csproj", "{DA8A4510-7118-4275-87E7-640DC83F5AE5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{058021B9-C3B0-4282-9E58-A02DA4B8C396}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{058021B9-C3B0-4282-9E58-A02DA4B8C396}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{058021B9-C3B0-4282-9E58-A02DA4B8C396}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{058021B9-C3B0-4282-9E58-A02DA4B8C396}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA8A4510-7118-4275-87E7-640DC83F5AE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA8A4510-7118-4275-87E7-640DC83F5AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA8A4510-7118-4275-87E7-640DC83F5AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA8A4510-7118-4275-87E7-640DC83F5AE5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
