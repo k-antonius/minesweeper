@@ -99,10 +99,19 @@ namespace MinesweeperTest
         }
 
         [Fact]
-        public void TestGetTile0_0() 
+        public void TestGetTile0_0onBoard10x10() 
         {
-            Assert.Throws<NotImplementedException>(() => 
-                                                   board10x10.GetTile(0,0)); 
+            var target = board10x10.GetTile(0,0);
+            var expected = new Tile(0, 0);
+            Assert.Equal(target, expected);
+        }
+
+        [Fact]
+        public void TestGetTile3_1onBoard10x10()
+        {
+            var target = board10x10.GetTile(3, 1);
+            var expected = new Tile(3, 1);
+            Assert.Equal(target, expected);
         }
 
         [Fact]
