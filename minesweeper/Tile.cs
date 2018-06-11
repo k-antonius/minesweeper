@@ -9,20 +9,12 @@ namespace Minesweeper
 
         private Visibility visibility;
         private Contents contents;
-        private readonly int[] location;
 
-
-        public Tile(int row, int col)
+        public Tile(Contents contents = Contents.Empty,
+                    Visibility visibility = Visibility.Hidden)
         {
-            this.visibility = Visibility.Hidden;
-            this.contents = Contents.Empty;
-        }
-
-        public Tile(int row, int col, Contents initial_contents,
-                    Visibility initial_visibility)
-        {
-            this.visibility = initial_visibility;
-            this.contents = initial_contents;
+            this.visibility = visibility;
+            this.contents = contents;
         }
 
         public Visibility GetVisibility() {
