@@ -22,7 +22,7 @@ namespace Minesweeper
                 for (int j = 0; j < num_cols; j++)
                 {
                     // sometimes the tile should have a mine
-                    this.board[i, j] = new Tile();
+                    this.board[i, j] = new Tile(i, j);
                 }
             }
 

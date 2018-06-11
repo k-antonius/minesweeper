@@ -9,12 +9,16 @@ namespace Minesweeper
 
         private Visibility visibility;
         private Contents contents;
+        private readonly int row;
+        private readonly int col;
 
-        public Tile(Contents contents = Contents.Empty,
+        public Tile(int row, int col, Contents contents = Contents.Empty,
                     Visibility visibility = Visibility.Hidden)
         {
             this.visibility = visibility;
             this.contents = contents;
+            this.row = row;
+            this.col = col;
         }
 
         public Visibility GetVisibility()
@@ -60,6 +64,28 @@ namespace Minesweeper
                     throw new Exception("Tile revealed case invalid.");
             }
             throw new Exception("Tile ToString Error");
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            Tile that = (Tile)obj;
+            return (that.row == row) && (that.col == col);
+        }
+
+        public override int GetHashCode()
+        {
+            int hash = 17;
+
+            hash = hash * 23 + row.GetHashCode();
+            hash = hash * 23 + col.GetHashCode();
+
+            return hash;
+
         }
     }
 }
