@@ -32,7 +32,7 @@ namespace Minesweeper
         /// Returns the 2d array representing the board.
         /// </summary>
         /// <returns>The board.</returns>
-        public Tile[,] getBoard()
+        public Tile[,] GetBoard()
         {
             return board;
         }
