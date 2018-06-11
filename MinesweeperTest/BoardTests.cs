@@ -14,9 +14,10 @@ namespace MinesweeperTest
         }
 
         [Fact]
-        public void TestBoardEmpty()
+        public void TestBoardDimensions10x10()
         {
-            Assert.True()
+            int[,] target = board10x10.getBoard();
+            Assert.True(target.Length == 100, "length as " + target.Length);
         }
     }
 }
