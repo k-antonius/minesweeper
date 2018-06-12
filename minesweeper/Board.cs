@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Minesweeper;
 
 namespace Minesweeper
@@ -99,6 +100,37 @@ namespace Minesweeper
                 }
             }
             return board_str;
+        }
+
+        public List<Tile> FindAdjacent(int row, int col)
+        {
+            int[] directions = { 0, 1, -1 };
+            List<Tile> neighbors = new List<Tile>();
+
+            foreach (int row_offset in directions)
+            {
+                foreach (int col_offset in directions)
+                {
+                    if (row_offset == 0 && col_offset == 0)
+                    {
+                        continue;
+                    }
+                    var neighbor_row = row + row_offset;
+                    var neighbor_col = col + col_offset;
+                    if (IsWithinBounds(neighbor_row, neighbor_col))
+                    {
+                        var neighbor = GetTile(neighbor_row, neighbor_col);
+                        neighbors.Add(neighbor);
+                    }
+                }
+            }
+
+            return neighbors;
+        }
+
+        public void SearchLocation(int row, int col) 
+        {
+                
         }
     }
 }
