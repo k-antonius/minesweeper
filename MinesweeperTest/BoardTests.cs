@@ -1,6 +1,7 @@
 using System;
 using Minesweeper;
 using Xunit;
+using System.Collections.Generic;
 
 
 namespace MinesweeperTest
@@ -17,16 +18,16 @@ namespace MinesweeperTest
         string board4x4_string_0_0_flag;
 
 
-        public BoardTests() 
+        public BoardTests()
         {
             board10x10 = new Board(10, 10, 5);
             board4x4 = new Board(4, 4, 2);
             height_10x10 = board10x10.GetBoard().GetLength(0);
             width_10x10 = board10x10.GetBoard().GetLength(1);
-            board4x4_string = "    0 1 2 3 " + Environment.NewLine + 
-                              "0 [ H H H H ]" + Environment.NewLine + 
-                              "1 [ H H H H ]" + Environment.NewLine + 
-                              "2 [ H H H H ]" + Environment.NewLine + 
+            board4x4_string = "    0 1 2 3 " + Environment.NewLine +
+                              "0 [ H H H H ]" + Environment.NewLine +
+                              "1 [ H H H H ]" + Environment.NewLine +
+                              "2 [ H H H H ]" + Environment.NewLine +
                               "3 [ H H H H ]" + Environment.NewLine;
 
             board4x4_string_mine_2_2 = "    0 1 2 3 " + Environment.NewLine +
@@ -63,13 +64,40 @@ namespace MinesweeperTest
             {
                 for (int j = 0; j < width; j++)
                 {
-                    if (predicate(board.GetBoard()[i, j])) {
+                    if (predicate(board.GetBoard()[i, j]))
+                    {
                         continue;
                     }
                     else
                     {
                         return false;
                     }
+                }
+            }
+            return true;
+        }
+
+        private string TileListPrinter(List<Tile> tile_list)
+        {
+            string output_string = "";
+            foreach (Tile tile in tile_list)
+            {
+                output_string += tile.GetRowColString();
+            }
+
+            return output_string;
+        }
+
+        private bool TileListComparer(List<Tile> expected,
+                                      List<Tile> actual) 
+        {
+            if (expected.Count != actual.Count) {
+                return false;
+            }    
+
+            foreach (Tile tile in expected) {
+                if (! actual.Contains(tile)) {
+                    return false;
                 }
             }
             return true;
@@ -148,6 +176,82 @@ namespace MinesweeperTest
             Tile tile_2_2 = board4x4.GetTile(0, 0);
             tile_2_2.SetVisibility(Tile.Visibility.Flagged);
             Assert.Equal(board4x4_string_0_0_flag, board4x4.ToString());
+        }
+
+        [Fact]
+        public void TestFindAdjacent4x4_0_0()
+        {
+            var expected = new List<Tile>();
+            expected.Add(new Tile(0, 1));
+            expected.Add(new Tile(1, 0));
+            expected.Add(new Tile(1, 1));
+
+            Assert.Equal(expected, board4x4.FindAdjacent(0, 0));
+        }
+
+        [Fact]
+        public void TestFindAdjacent4x4_1_2()
+        {
+            var expected = new List<Tile>();
+            expected.Add(new Tile(0, 1));
+            expected.Add(new Tile(0, 2));
+            expected.Add(new Tile(0, 3));
+            expected.Add(new Tile(1, 1));
+            expected.Add(new Tile(1, 3));
+            expected.Add(new Tile(2, 1));
+            expected.Add(new Tile(2, 2));
+            expected.Add(new Tile(2, 3));
+
+            var actual = board4x4.FindAdjacent(1, 2);
+
+            Assert.True(TileListComparer(expected, actual),
+                        TileListPrinter(actual));
+        }
+
+        [Fact]
+        public void TestFindAdjacent4x4_3_3()
+        {
+            var expected = new List<Tile>();
+            expected.Add(new Tile(2, 2));
+            expected.Add(new Tile(2, 3));
+            expected.Add(new Tile(3, 2));
+
+            var actual = board4x4.FindAdjacent(3, 3);
+
+            Assert.True(TileListComparer(expected, actual),
+                        TileListPrinter(actual));
+        }
+
+        [Fact]
+        public void TestFindAdjacent4x4_1_3()
+        {
+            var expected = new List<Tile>();
+            expected.Add(new Tile(0, 2));
+            expected.Add(new Tile(0, 3));
+            expected.Add(new Tile(1, 2));
+            expected.Add(new Tile(2, 2));
+            expected.Add(new Tile(2, 3));
+
+            var actual = board4x4.FindAdjacent(1, 3);
+
+            Assert.True(TileListComparer(expected, actual),
+                        TileListPrinter(actual));
+        }
+
+        [Fact]
+        public void TestFindAdjacent4x4_2_0()
+        {
+            var expected = new List<Tile>();
+            expected.Add(new Tile(1, 0));
+            expected.Add(new Tile(1, 1));
+            expected.Add(new Tile(2, 1));
+            expected.Add(new Tile(3, 0));
+            expected.Add(new Tile(3, 1));
+
+            var actual = board4x4.FindAdjacent(2, 0);
+
+            Assert.True(TileListComparer(expected, actual),
+                        TileListPrinter(actual));
         }
 
 
