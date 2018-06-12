@@ -87,6 +87,11 @@ namespace Minesweeper
             return hash;
 
         }
+
+        public string GetRowColString()
+        {
+            return "[ " + row.ToString() + ", " + col.ToString() + " ]";
+        }
     }
 }
 
