@@ -20,6 +20,7 @@ namespace Minesweeper
             this.contents = contents;
             this.row = row;
             this.col = col;
+            this.adjacent_mines = 0;
         }
 
         public Visibility GetVisibility()
@@ -44,6 +45,10 @@ namespace Minesweeper
 
         public void IncrNumAdjMines()
         {
+            if (GetContents() == Tile.Contents.Empty) 
+            {
+                SetContents(Tile.Contents.Number);
+            }
             adjacent_mines++;
         }
 
@@ -63,7 +68,7 @@ namespace Minesweeper
                         case Contents.Empty:
                             return " ";
                         case Contents.Number:
-                            return "?"; // implement method
+                            return $"{adjacent_mines}"; // implement method
                         case Contents.Mine:
                             return "*";
                     }
@@ -98,6 +103,12 @@ namespace Minesweeper
         {
             return "[ " + row.ToString() + ", " + col.ToString() + " ]";
         }
+
+        public int GetRow()
+        { return row; }
+
+        public int GetCol()
+        { return col; }
     }
 }
 

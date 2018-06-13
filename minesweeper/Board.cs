@@ -128,9 +128,63 @@ namespace Minesweeper
             return neighbors;
         }
 
-        public void SearchLocation(int row, int col) 
+        // rather than having this return a bool
+        // have it count the number of neighbors with mines
+        // update the increment mine method in Tile to take an int
+        private bool IsNeighborMined(List<Tile> neighbors)
         {
-                
+            foreach (Tile neighbor in neighbors)
+            {
+                if (neighbor.GetContents() == Tile.Contents.Mine)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void SearchLocation(int row, int col)
+        {
+            var search_target = GetTile(row, col);
+            var visibility = search_target.GetVisibility();
+            var contents = search_target.GetContents();
+            if (visibility != Tile.Visibility.Hidden || 
+                contents == Tile.Contents.Mine)
+            {
+                throw new TileSearchException("Tile searched was " + search_target.GetRowColString());
+            }
+            var queue = new Queue<Tile>();
+            queue.Enqueue(GetTile(row, col));
+
+            while (queue.Count > 0) 
+            {
+                Tile current = queue.Dequeue();
+                current.SetVisibility(Tile.Visibility.Revealed);
+                var neighbors = FindAdjacent(current.GetRow(), 
+                                             current.GetCol());
+
+                if (IsNeighborMined(neighbors))
+                {
+                    foreach (Tile neighbor in neighbors)
+                    {
+                        if (neighbor.GetContents() == Tile.Contents.Mine)
+                        {
+                            current.IncrNumAdjMines();
+                        }
+                    }
+                    continue;
+                }
+
+                foreach (Tile neighbor in neighbors)
+                {
+                    var neighbor_visibility = neighbor.GetVisibility();
+                    if (neighbor_visibility == Tile.Visibility.Hidden &&
+                        ! queue.Contains(neighbor))
+                    {
+                        queue.Enqueue(neighbor);
+                    }
+                }
+            }
         }
     }
 }
