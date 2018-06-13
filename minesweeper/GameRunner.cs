@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Minesweeper;
 
 
 namespace minesweeper
@@ -14,13 +16,13 @@ namespace minesweeper
 
         static void Main(string[] args)
         {
+            var x = new Tile(0, 0);
+            x.IncrNumAdjMines();
+            x.SetVisibility(Tile.Visibility.Revealed);
 
-            Visibility x = Visibility.Hidden;
-            var y = Visibility.Flagged;
+            var expression = x;
 
-            bool result = x == y;
-
-            Console.WriteLine(result);
+            Console.WriteLine(expression);
 
 
         }

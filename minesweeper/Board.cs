@@ -7,6 +7,10 @@ namespace Minesweeper
     public class Board
     {
         private readonly Tile[,] board;
+        private readonly int num_mines;
+        private readonly int flagged_mines;
+        private readonly int board_rows;
+        private readonly int board_cols;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="T:minesweeper.Board"/>
@@ -15,18 +19,68 @@ namespace Minesweeper
         /// <param name="num_rows">Number rows.</param>
         /// <param name="num_cols">Number cols.</param>
         /// <param name="num_mines">Number mines.</param>
-        public Board(int num_rows, int num_cols, int num_mines)
+        public Board(int num_rows, int num_cols, int num_mines,
+                     bool testing = false)
         {
+            
             this.board = new Tile[num_rows, num_cols];
+            this.board_rows = num_rows;
+            this.board_cols = num_cols;
+            this.num_mines = num_mines;
             for (int i = 0; i < num_rows; i++)
             {
                 for (int j = 0; j < num_cols; j++)
                 {
-                    // sometimes the tile should have a mine
                     this.board[i, j] = new Tile(i, j);
                 }
             }
 
+            if (! testing)
+            {
+                var mine_coords = GenMineCoords();
+                foreach (var coord in mine_coords)
+                {
+                    GetTile(coord[0], coord[1]).SetContents(Tile.Contents.Mine);
+                }
+            }
+
+        }
+
+        public int GetRows()
+        {
+            return board_rows;
+        }
+
+        public int GetCols()
+        {
+            return board_cols;
+        }
+
+        public int GetMines()
+        {
+            return num_mines;
+        }
+
+        private List<int[]> GenMineCoords()
+        {
+            var mine_coords = new List<int[]>();
+
+            while (mine_coords.Count < num_mines)
+            {
+                var rand = new Random();
+                int row = rand.Next(0, board.GetLength(0));
+                int col = rand.Next(0, board.GetLength(1));
+                int[] coord = { row, col };
+
+                if (mine_coords.Contains(coord))
+                {
+                    continue;
+                }
+
+                mine_coords.Add(coord);
+
+            }
+            return mine_coords;
         }
 
         /// <summary>

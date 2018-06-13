@@ -11,6 +11,7 @@ namespace MinesweeperTest
         Board board10x10;
         Board board4x4;
         Board board2x2;
+        Board board_mine_test;
         int height_10x10;
         int width_10x10;
         string board4x4_string;
@@ -27,9 +28,10 @@ namespace MinesweeperTest
 
         public BoardTests()
         {
-            board10x10 = new Board(10, 10, 5);
-            board4x4 = new Board(4, 4, 2);
-            board2x2 = new Board(2, 2, 0);
+            board10x10 = new Board(10, 10, 5, true);
+            board4x4 = new Board(4, 4, 2, true);
+            board2x2 = new Board(2, 2, 0, true);
+            board_mine_test = new Board(10, 10, 10);
             height_10x10 = board10x10.GetBoard().GetLength(0);
             width_10x10 = board10x10.GetBoard().GetLength(1);
             board4x4_string = "    0 1 2 3 " + Environment.NewLine +
@@ -390,6 +392,31 @@ namespace MinesweeperTest
 
             Assert.True(board2x2.ToString() == board2x2_string_one_mine_0_0,
                         board2x2.ToString());
+        }
+
+        private int CountMines(Board board)
+        {
+            int count = 0;
+
+            for (int i = 0; i < board.GetRows(); i++)
+            {
+                for (int j = 0; j < board.GetCols(); j++)
+                {
+                    var tile = board.GetTile(i, j);
+                    if (tile.GetContents() == Tile.Contents.Mine)
+                    {
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+
+        [Fact]
+        public void TestMineGeneration()
+        {
+            Assert.True(board_mine_test.GetMines() == 
+                        CountMines(board_mine_test));
         }
     }
 }
