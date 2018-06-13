@@ -11,6 +11,7 @@ namespace Minesweeper
         private Contents contents;
         private readonly int row;
         private readonly int col;
+        private int adjacent_mines;
 
         public Tile(int row, int col, Contents contents = Contents.Empty,
                     Visibility visibility = Visibility.Hidden)
@@ -39,6 +40,11 @@ namespace Minesweeper
         public void SetVisibility(Visibility updated_visibility)
         {
             this.visibility = updated_visibility;
+        }
+
+        public void IncrNumAdjMines()
+        {
+            adjacent_mines++;
         }
 
         public override string ToString()
